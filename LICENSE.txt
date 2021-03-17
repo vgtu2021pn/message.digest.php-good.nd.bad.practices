@@ -1,0 +1,13 @@
+Hash-Generation v.0.3
+Licensed under Shephards Academic Free License 3.0
+
+1) Granting all rights of Copyright License.
+2) Granting all rights of Patent License.
+3) Granting all rights of Source Code License.
+4) Granting all rights to use and change the Code.
+5) Granting all rights to change the License.
+6) Author and Contributors shall stay Anonymous.
+7) All the Code shall stay Public.
+8) Everything about the Code to undergo learning phase of failing and standups.
+9) Everything about Best and Worst practices.
+10) Everything to point out the benefits and dangers of the Code.
