@@ -128,7 +128,7 @@ protected function generateHash($number = 0)
 			echo $i .".".$this->PHP_EOL();
 			$j++;
 			/* Does it is a strongest hash */
-			print('Username: BCRYPT; Password: '. password_hash($number, PASSWORD_DEFAULT));
+			print('Hint: BCRYPT; Hash: '. password_hash($number, PASSWORD_DEFAULT));
 		
 		}
 		
@@ -139,7 +139,7 @@ protected function generateHash($number = 0)
 			$j++;
 			/* Does it is a strongest hash */
 			$this->options = array("cost" => 12,);
-			print('Username: BCRYPT; Password: '. password_hash($number, PASSWORD_BCRYPT, $this->options));
+			print('Hint: BCRYPT; Hash: '. password_hash($number, PASSWORD_BCRYPT, $this->options));
 			
 			// Does password_hash has something with crypt_blowfish?
 		
@@ -157,7 +157,7 @@ protected function generateHash($number = 0)
 			}
 			
 			$this->options = array("memory_cost" => 1<<10, "time_cost" => 1, "threads" => 1);
-			print('Username: ARGON2; Password: '. password_hash($number, PASSWORD_ARGON2I, $this->options));
+			print('Hint: ARGON2; Hash: '. password_hash($number, PASSWORD_ARGON2I, $this->options));
 			
 			// Does this hash algorithm is a winner of Password Hashing Competition?
 		
@@ -165,7 +165,7 @@ protected function generateHash($number = 0)
 			echo $i .".".$this->PHP_EOL();
 			$j++;
 			/* Does it is a strongest hash */
-			print('Username: ARGON2; Password: '. password_hash($number, PASSWORD_ARGON2I));
+			print('Hint: ARGON2; Hash: '. password_hash($number, PASSWORD_ARGON2I));
 
 			// Does this hash algorithm is a winner of Password Hashing Competition?
 		}
