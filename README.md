@@ -11,7 +11,8 @@ I. If You want to understand the PHP programming language:
 
 O. If You don't understand the PHP programming language:
 - Conduct analysis and research the output of this Code;
-- Change Study_Book_No variable to random number;
+- Change study_book_no variable to random number;
+- The Code is not the Panacea and does not return simple Answers;
 
 OR
 
