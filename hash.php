@@ -48,7 +48,7 @@ protected function generateHash($number = 0)
 		echo $i .".".$this->PHP_EOL();
 		$j++;
 		/* Does it is a hash? */
-		print('Hint: username; Hash: '. $number);
+		print('Hint: empty; Hash: '. $number);
 		
 		$i = $i + 1;
 		echo $i .".".$this->PHP_EOL();
