@@ -2,68 +2,81 @@
 
 class generateHash {
 
-/* Informacinės saugos pagrindai - Hashing */
+/*
+ * Informacinės saugos pagrindai - Hashing 
+ * Only for learning the Concepts of Hashing.
+ */
 
-public $Study_Book_No = '000000000';
+public $study_book_no = '000000000';
 
+private $pepper = array();
+	
 private $options;
 
 public function __construct()
 {
-	echo "Script for usage from command line and http(s)." . PHP_EOL;
-	if((int)$this->Study_Book_No > 0)
+	echo "From the command line and http(s)." . PHP_EOL;
+	
+	/* Application specific hash security measure - the Pepper */
+	$this->pepper[] = array('first+128+letters+long+text+value+or+so+aaaaAaaaaA+aaaAaaaaAa+aaAaaaaAaa+aAaaaaAaaa+AaaaaAaaaa+aaaaAaaaaA+aaaAaaaaAa+aaAaaaaAaa+', '2021-01-01 00:00:00');
+	$this->pepper[] = array('second+128+letters+long+text+value+or+so+bbbBbbbbbB+bbbbBBbbbb+BbbbbbBbbb+bBbbbbbBbb+bbBbbbbbBb+bbbBbbbbbB+bbbbBBbbbb+BbbbbbBbbb', '2022-01-01 00:00:00');
+	$this->pepper[] = array('third+128+letters+long+text+value+or+so+ccCccccCcc+cccCccccCc+ccccCccccC+cCccccCccc+CccccCcccc+cccCccCccc+ccccCCcccc+CccccccccC+', '2023-01-01 00:00:00');
+	
+	if((int)$this->study_book_no > 0)
 	{
-		$this->generateHash($this->Study_Book_No);
+		$this->generateHash($this->study_book_no);
 	}
 	else
 	{
-		echo "Error: Invalid Study Book No.";
+		echo "Error: Invalid value of the variable study_book_no .";
 		echo $this->PHP_EOL();
-		echo "Tip. Edit the file and change variable \$Study_Book_No.";
+		echo "Tip. Edit the file and change the variable \$study_book_no .";
 		echo $this->PHP_EOL();
-		echo "For Research. ";
+		echo "For later: ";
 		echo $this->showOpenSSLMethods();
 		echo $this->PHP_EOL();
 	}
 }
 
-protected function generateHash($Number = 0)
+protected function generateHash($number = 0)
 {
 	$i = 0;
 	$j = 0;
-	if(isset($this->Study_Book_No) and (int)$Number > 0)
+	if(isset($this->study_book_no) and (int)$number > 0)
 	{
 		$i = $i + 1;
 		echo $i .".".$this->PHP_EOL();
 		$j++;
 		/* Does it is a hash? */
-		print('Username: username; Password: '. $Number);
+		print('Username: username; Password: '. $number);
 		
 		$i = $i + 1;
 		echo $i .".".$this->PHP_EOL();
 		$j++;
 		/* Does it is a hash? */
-		print('Username: base64; Password: '. base64_encode($Number));
+		print('Username: base64; Password: '. base64_encode($number));
 
 		if (function_exists('md5')) {
 
 			$i = $i + 1;
 			echo $i .".".$this->PHP_EOL();
 			$j++;
-			/* Does it is a strong hash? */
-			print('Username: MD5; Password: '. md5($Number));
+			/* Does it is a good hash? */
+			print('Hint: MD5; Hash: '. md5($number));
 
 			$i = $i + 1;
 			echo $i .".".$this->PHP_EOL();
 			$j++;
-			/* Does it is a strong hash? */
-			print('Username: MD5(MD5); Password: '. md5(md5(md5($Number))));
+			/* Does it is a better hash? */
+			/* Let's make assumption that there are hardcoded repetitions of the same algorithm. */
+			print('Hint: MD5(MD5); Hash: '. md5(md5(md5($number))));
 
 			$i = $i + 1;
 			echo $i .".".$this->PHP_EOL();
 			$j++;
-			/* Does it is a strong hash? */
-			print('Username: MD5+Salt(1); Password: '. md5('security'.$Number));
+			/* Does it is even better hash? */
+			/* Let's make assumption that there are hardcoded join of the password with the fixed value of the salt. */
+			print('Hint: MD5+Salt(1); Hash: '. md5('security'.$number));
 		
 		}
 		
@@ -73,33 +86,39 @@ protected function generateHash($Number = 0)
 			echo $i .".".$this->PHP_EOL();
 			$j++;
 			/* Does it is a strong hash? */
-			print('Username: MD5+Salt(2); Password: '. crypt($Number, '$1$security$'));
+			/* Let's make assumption that some kind of library for hashing is in use, which accepts various (i.e. fixed) parameters. */
+			print('Hint: MD5+Salt(2); Hash: '. crypt($number, '$1$security$'));
 
 			$i = $i + 1;
 			echo $i .".".$this->PHP_EOL();
 			$j++;
 			/* Does it is a strong hash? */
-			/* Warning! Salt of Bytes */
-			print('Username: MD5+Salt(3); Password: '. crypt($Number, '$1$'.$this->basicSalt(12).'$'));
+			/* Let's make assumption that some kind of library for hashing is in use, which accepts various (i.e. random) parameters. */
+			/* Does it is good idea to join the salt of bytes with the value of non-bytes? */
+			print('Hint: MD5+Salt(3); Hash: '. crypt($number, '$1$'.$this->basicSalt(12).'$'));
 
 			$i = $i + 1;
 			echo $i .".".$this->PHP_EOL();
 			$j++;
 			/* Does it is a strong hash? */
-			/* Warning! Salt of Bytes */
-			print('Username: MD5+Salt(4); Password: '. crypt('abc'.$Number.'!@#', '$1$'.$this->basicSalt(12).'$'));
+			/* Let's make assumption that some kind of library for hashing is in use, which accepts various (i.e. random) parameters. */
+			/* Does it is good idea to join the salt of bytes with the value of non-bytes? */
+			/* Does by having pepper we would need to collect additional data for usability of the Hash? */
+			print('Hint: MD5+Salt(3)+Pepper; Hash: '. crypt($this->returnPepper().$number, '$1$'.$this->basicSalt(12).'$'));
 
 			$i = $i + 1;
 			echo $i .".".$this->PHP_EOL();
 			$j++;
 			/* Does it is a strong hash? */
-			print('Username: SHA1; Password: '. sha1('abc'.$Number.'!@#'));
+			/* Does by having pepper we would need to collect additional data for usability of the Hash? */
+			print('Hint: SHA1+Pepper; Hash: '. sha1($this->returnPepper().$number));
 
 			$i = $i + 1;
 			echo $i .".".$this->PHP_EOL();
 			$j++;
 			/* Does it is a strong hash */
-			print('Username: SHA256; Password: '. crypt('abc'.$Number.'!@#','$5$rounds=1000$additionalsalts.'));
+			/* Let's make assumption that some kind of library for hashing is in use with passed additional hashing controls. */
+			print('Hint: SHA256; Hash: '. crypt($this->returnPepper().$number,'$5$rounds=1000$additionalsalts.'));
 		
 		}
 		
@@ -109,7 +128,7 @@ protected function generateHash($Number = 0)
 			echo $i .".".$this->PHP_EOL();
 			$j++;
 			/* Does it is a strongest hash */
-			print('Username: BCRYPT; Password: '. password_hash($Number, PASSWORD_DEFAULT));
+			print('Username: BCRYPT; Password: '. password_hash($number, PASSWORD_DEFAULT));
 		
 		}
 		
@@ -120,7 +139,7 @@ protected function generateHash($Number = 0)
 			$j++;
 			/* Does it is a strongest hash */
 			$this->options = array("cost" => 12,);
-			print('Username: BCRYPT; Password: '. password_hash($Number, PASSWORD_BCRYPT, $this->options));
+			print('Username: BCRYPT; Password: '. password_hash($number, PASSWORD_BCRYPT, $this->options));
 			
 			// Does password_hash has something with crypt_blowfish?
 		
@@ -138,7 +157,7 @@ protected function generateHash($Number = 0)
 			}
 			
 			$this->options = array("memory_cost" => 1<<10, "time_cost" => 1, "threads" => 1);
-			print('Username: ARGON2; Password: '. password_hash($Number, PASSWORD_ARGON2I, $this->options));
+			print('Username: ARGON2; Password: '. password_hash($number, PASSWORD_ARGON2I, $this->options));
 			
 			// Does this hash algorithm is a winner of Password Hashing Competition?
 		
@@ -146,7 +165,7 @@ protected function generateHash($Number = 0)
 			echo $i .".".$this->PHP_EOL();
 			$j++;
 			/* Does it is a strongest hash */
-			print('Username: ARGON2; Password: '. password_hash($Number, PASSWORD_ARGON2I));
+			print('Username: ARGON2; Password: '. password_hash($number, PASSWORD_ARGON2I));
 
 			// Does this hash algorithm is a winner of Password Hashing Competition?
 		}
@@ -190,7 +209,21 @@ protected function basicSalt($length = 32) {
     settype($min, "integer");
     settype($max, "integer");
     
-    return rand($min,$max);
+    return rand($min, $max);
+}
+	
+protected function returnPepper() {
+    $pepper = '';
+    $time_today = date("Y-m-d H:i:s");
+    $time_limit = date("Y-m-d H:i:s", strtotime("+1 years"));
+    
+    foreach ($this->pepper as $key => $value) {
+        if ($value[1] > $time_today and $value[1] < $time_limit) {
+		$pepper .= $value[0]; 
+        }
+    }
+    
+    return $pepper;
 }
 
 public function showOpenSSLMethods()
@@ -226,7 +259,7 @@ public function showOpenSSLMethods()
 
 public function __destruct()
 {
-	unset($this->Study_Book_No);
+	unset($this->study_book_no);
 }
 
 }
