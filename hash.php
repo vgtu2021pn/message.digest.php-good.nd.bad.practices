@@ -48,13 +48,13 @@ protected function generateHash($number = 0)
 		echo $i .".".$this->PHP_EOL();
 		$j++;
 		/* Does it is a hash? */
-		print('Username: username; Password: '. $number);
+		print('Hint: username; Hash: '. $number);
 		
 		$i = $i + 1;
 		echo $i .".".$this->PHP_EOL();
 		$j++;
 		/* Does it is a hash? */
-		print('Username: base64; Password: '. base64_encode($number));
+		print('Hint: base64; Hash: '. base64_encode($number));
 
 		if (function_exists('md5')) {
 
